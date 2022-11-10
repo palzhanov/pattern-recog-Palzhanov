@@ -1,0 +1,86 @@
+\documentclass[12pt,letterpaper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+}
+\title{Robust Principal Component Analysis for Modal Decomposition of Corrupt Fluid Flows}
+\author{Yerbol Palzhanov}
+\date{Fall 2022}
+
+
+
+\begin{document}
+\section*{Robust Principal Component Analysis for Modal Decomposition of Corrupt Fluid Flows\cite{scherl2020}}{Project report by \textbf{Yerbol Palzhanov}, September 15}
+
+
+%The goal of the project is to explore the results of the paper by Scherl et.al. \cite{scherl2020}, reproduce numerical results and evaluate on a different data.
+%
+%Authors use the Robust Principal Component Analysis to improve the quality of the flow-field data. RPCA is also known as proper orthogonal decomposition(POD) in fluids.
+%From papers presentation it is immediately seen that for exact solution with manually added  noise  flow-field data the method works very good. But the performance of the method with real data is more interesting. Authors work with Johns Hopkins Turbulence database to evaluate the performance of the method. 
+%
+%So general outline(plan) is:
+%\begin{enumerate}
+%	\item Explore main concepts
+%	\item Understand the mathematical results
+%	\item Reproduce experiments
+%	\item Apply to some new data
+%\end{enumerate}
+
+\subsection*{Motivation and challenges}
+Although experimental measuring techniques have evolved a lot over the past years, there are several well-known challenges to acquiring clean and accurate data. These include inadequate illumination and irregularities in the light
+field, background speckle, seeding density and nonpassivity of the particles, sharp gradients in flow properties, optical issues, such as alignment and aberration, limited resolution and shot noise in the image recording, and out of plane motion of the particles when measuring in 2D.
+
+There are several different approaches to cleaning the data and extracting useful information form the data. This paper investigates the use of RPCA, a robust variant of POD/PCA. 
+
+RPCA was originally popularized with Netflix matrix competition and has since been widely used in different problems. In order to asses the performance of the RPCA, authors also do PCA and DMD modal analyses and compare results. 
+\subsection*{Brief outline of POD and DMD}
+\begin{itemize}
+	\item Proper orthogonal decomposition(POD) 
+	
+	
+	
+	
+	\item Dynamic mode decomposition (DMD)
+\end{itemize}
+\textit{TODO: put description of methods.}
+
+\subsection*{RPCA}
+Candes \textit{et al.} \cite{rpca} have developed RPCA  that seeks to decompose a data matrix $X$ into a structured low-rank matrix $L$ that is characterized by dominant coherent structures and a sparse matrix $S$ containing
+outliers and corrupt data:
+\begin{equation}
+	X=L+S.
+\end{equation}
+The principal components of $L$ are robust to outliers and corrupt data, which are isolated in $S$.
+
+Mathematically, the goal is to find $\mathbf{L}$ and $\mathbf{S}$ that satisfy the following:
+$$
+\min _{\mathbf{L}, \mathbf{S}} \operatorname{rank}(\mathbf{L})+\|\mathbf{S}\|_0 \text { subject to } \mathbf{L}+\mathbf{S}=\mathbf{X} \text {. }
+$$
+$\|\mathbf{S}\|_0$ counts the number of nonzero elements in $\mathbf{S}$, quantifying how sparse it is. $\operatorname{rank}(\mathbf{L})$ is the number of nonzero singular values in $\mathbf{L}$, quantifying how many linearly independent rows and columns describe the data. 
+
+Since this is not a convex optimization problems, it is possible to solve the problem by convex relaxation. Relaxed convex problem is known as principal component pursuit and implemented in MATLAB using augmented Lagrange multiplier(ALM) algorithm.
+
+\subsection*{Numerical experiments}
+RPCA filtering demonstrated on several data sets, drawn from direct numerical simulations and PIV data from experiments. We will focus on two of them: flow past a cylinder with artificial noise and cross-flow turbine experiment data from University of Washington.
+
+\subsubsection*{Cylinder flow}
+
+\subsubsection*{Cross-flow turbine wake}
+
+TODO: Experiment with codes located at \url{https://github.com/ischerl/RPCA-PIV}
+
+
+
+\bibliographystyle{abbrv}
+\bibliography{literature}
+
+\end{document}
